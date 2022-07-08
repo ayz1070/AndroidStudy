@@ -1,0 +1,63 @@
+//class
+
+// 클래스의 멤버는 생성자, 변수, 함수, 클래스로 구성
+// 생성자
+class User constructor(name: String, count: Int){   // constructor가 붙는 경우가 주생성자이다. constructor는 생략 가능하다.
+    // 변수
+    var name: String
+    var count: Int
+
+    // init: 주생성자의 본문
+    init{
+        println("init 내부입니다...")    // init 은 객체 생성 시 자동 실행
+        this.name = name    // this.name의 name은 클래스 멤버 변수, 뒤의 name은 생성자 매개변수
+        this.count = count
+        // 그니까 constructor 뒤의 매개변수는 지역변수니까 init 내부에서만 사용할 수 있다.
+        // 그런데 클래스 전체에 쓰고 싶은 경우는 var name: String 으로 클래스 멤버 변수를 선언하고
+        // init에서 this.name=name 으로 '클래스 멤버 변수 = 매개변수' 로 값을 대입해서 클래스에서 사용 가능하다.
+        // ㅇㅋ?
+    }
+
+    // 함수
+    fun someFun(){
+        println("name : $name, count: $count")
+    }
+
+    // 클래스
+    class someClass{ }
+}
+
+// 근데 주생성자에 init 까지 하니까 복잡하네? 다른 방법도 있다.
+
+class User2(val name: String, val count: Int){
+    // 차이점은 주 생성자의 매개변수에 val을 붙혔다는 점이다.
+    // 매개변수를 선언할 때 val 이나 var 을 추가할 수 없지만 예외적으로 주 생성자에서 val or var을 붙히면
+    // 클래스의 맴버변수가 되는 것이다. ㅇㅋ?
+
+    fun someFun(){
+        println("name : $name, count: $count")
+    }
+}
+
+// 주 생성자와 보조 생성자
+class User3(name: String){  // 주 생성자
+    // 보조 생성자
+    constructor(name:String, count: Int): this(name){   // 주 생성자의 name을 받기 위해 this(name) 으로 표기
+        println("name : $name, count: $count")
+    }
+    // 보조 생성자
+    constructor(name:String, count:Int, email:String): this(name,count){    // 보조 생성자 1의 count를 받기 위해 this 활용
+        println("name : $name, count: $count, email: $email")
+    }
+}
+
+fun main(){
+    val user = User("Ahn",25)  // 객체 생성
+    user.someFun()  // 멤버 접근
+
+    val user2 = User2("Ahn2",25)
+    user2.someFun()
+
+    val user3 = User3("Ahn3",25,"naver")
+
+}
