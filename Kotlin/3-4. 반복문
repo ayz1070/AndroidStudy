@@ -1,0 +1,44 @@
+fun main(){
+    // 반복문
+    // for 문
+    var sum: Int = 0
+    for (i in 1..10){   // 범위를 이런식으로 표현하는구만!
+        sum +=i
+    }
+    println(sum)
+
+    // step을 활용하여 2씩 증가
+    var sum2: Int =0
+    for (k in 2..10 step 2){
+        sum2 += k
+    }
+    println(sum2)
+
+    // downTo를 활용하여 1씩 감소
+    for (j in 10 downTo 1){
+        print("${j} ")
+    }
+    println()
+    // 반복문 컬렉션 타입 활용
+    var data1 = arrayOf<Int>(10,20,30)
+    for (a in data1.indices){   // indices: index의 복수형
+        print("${data1[a]} ")
+    }
+    println()
+    // withIndex()
+    var data2= arrayOf<Int>(10,20,30)
+    for ((index, value) in data2.withIndex()){
+        println("인덱스: ${index}, 값: ${value}")
+
+    }
+
+    // while 문
+    var x =0
+    var sum3 = 0
+    while (x<10){
+        sum3 += ++x
+    }
+    println(sum3)
+
+    // 수정완료!!
+}
