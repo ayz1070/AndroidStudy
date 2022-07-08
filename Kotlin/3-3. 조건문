@@ -1,0 +1,49 @@
+fun main(){
+    // 조건문
+    // if
+    var data = 10
+    if (data==10){
+        println("10입니다")
+    }else if(data==20){
+        println("20입니다")
+    }else{
+        println("10도 20도 아닙니다.")
+    }
+    // 표현식으로 사용
+    val result= if (data==10){
+        println("10입니다")
+        true
+    }else{
+        println("10 아닙니다.")
+        false
+    }
+    println(result)
+
+    // when 문
+    var data2 = 20
+    when (data2){
+        10->println("10 입니다")
+        20->println("20 입니다")
+        else->{
+            println("10도 20도 아닙니다.")
+        }
+    }
+
+    // when 문 활용
+    var data3: Any = 30
+    when (data3){
+        is String -> println("문자임") // is 는 타입 확인
+        20, 30 -> println("20 or 30")
+        in 1..10 -> println("1~10")
+        else -> println("이외")
+    }
+
+    // when 문 표현식으로 사용
+    var data4 = 40
+    val result1 = when{
+        data4<50->"50보다 작음"
+        data4>50->"50보다 큼"
+        else->"50임"
+    }
+    println(result1)
+}
