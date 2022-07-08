@@ -1,0 +1,70 @@
+// 데이터 클래스 : data 키워드로 선언하며 자주 사용하는 데이터를 객체로 묶어 준다.
+
+class NonDataClass(val name:String, val email: String, val age: Int)    // 데이터 클래스 아님
+
+
+data class DataClass(val name:String, val email: String, val age: Int) {  // 데이터 클래스
+    lateinit var address: String
+    constructor(name:String,email: String,age: Int,address: String):this(name,email,age){
+        this.address = address
+    }
+
+}
+
+// 오브젝트 클래스 : 익명 클래스를 만들기 위해 사용
+// 이름이 없으므로 클래스를 선언하면서 동시에 객체를 생성해야 됨
+
+open class ObjectSuper{
+    open var data = 10
+    open fun some(){
+        println("ObjectSuper 클래스의 data: ${data}")
+    }
+}
+
+val Object = object: ObjectSuper(){
+    override var data = 20
+    override fun some(){
+        println("Object 클래스의 data: $data")
+    }
+}
+
+// 컴패니언 클래스 : 멤버 변수나 함수를 클래스 이름으로 접근하고자 할 때 사용
+// 객체를 생성하지 않고서도 접근 가능하다는 말이다.
+// 다른 언어의 static을 대체한다고 생각하자.
+
+class CompanionClass{
+    companion object{
+        var data = 10
+        fun some(){
+            println(data)
+        }
+    }
+}
+fun main(){
+    val non1 = NonDataClass("Ahn","naver",25)
+    val non2 = NonDataClass("Ahn","naver",25)
+
+    val data1 = DataClass("Ahn","naver",25)
+    val data2 = DataClass("Ahn","naver",25)
+
+    // equals() : 객체의 데이터가 같은지 확인
+    println("non data class equals : ${non1.equals(non2)}") // 객체 자체를 비교하므로 false
+    println("data class equals : ${data1.equals(data2)}")   // 객체의 데이터를 비교하므로 true
+
+    val obj1 = DataClass("Ahn","naver",25,"seoul")
+    val obj2 = DataClass("Ahn","naver",25,"haman")  // 차이점은 보조 생성자에서의 address 만 다르다
+    println("obj1 obj2 비교 : ${obj1.equals(obj2)}")  // 결과는 true. 주 생성자의 데이터만 비교한 결과가 출력된다는 것을 알 수 있다.
+
+    // toString() : 데이터 클래스를 사용할 때 객체가 가지는 값을 확인함
+
+    println("non data class toString : $non1")  // 일반 클래스는 toString 한 경우 의미 있는 데이터 출력 x
+    println("data class toString : $obj1")  // 데이터 클래스의 경우 객체가 포함하는 멤버 변수의 데이터를 출력
+
+    // object 클래스
+    Object.data = 30
+    Object.some()
+
+    // companion 클래스
+    CompanionClass.data = 20    // 일반 클래스라면 'val obj = CompanionClass()' 이런 식으로 객체를 생성해 접근해야 한다.
+    CompanionClass.some()   // 하지만 companion을 사용하면 객체 생성 없이 클래스 이름으로 접근 가능하다.
+}
