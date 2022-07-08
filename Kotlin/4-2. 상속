@@ -1,0 +1,60 @@
+// 상속 : 다른 클래스를 참조해서 선언하는 것
+
+open class Super(name: String){   // 상위 클래스는 open 키워드를 써줘야 하위 클래스가 접근이 가능하다.
+
+}
+
+class Sub(name:String): Super(name){ // 하위 클래스는 '하위 클래스: 상위 클래스()' 로 선언
+
+}
+
+class Sub1:Super{
+    // 매개변수를 보조 생성자로 상위 클래스의 생성자를 호출할 수 있다.
+    constructor(name: String):super(name)
+}
+
+// 오버라이딩 : 상위 클래스에 선언된 변수나 함수를 같은 이름으로 하위 클래스에서 다시 선언하는 것
+open class Super2(){    // 상위 클래스
+    open var someData = 10  // 클래스 멤버 변수 선언, open 처리 해줘야 오버라이딩 가능
+    open fun someFun(){
+        println("Super2 내부의 someFun, someData의 값 : $someData")
+    }
+}
+
+class Sub2:Super2(){
+    override var someData = 20  // Super2의 someData를 재정의 했다.
+    override fun someFun(){ // someFun을 재정의함
+        println("Sub2 내부의 someFun, someData의 값 : $someData")
+    }
+}
+
+// 접근 제한자 : 클래스의 멤버를 외부의 어느 범위까지 이용하게 할 것인지를 결정하는 키워드
+// public : 접근 제한이 없음
+// internal : 같은 모듈 내
+// protected : 해당 클래스 내부와 그 클래스를 상속받는 하위 클래스, 최상위에서의 변수나 함수에는 사용 불가
+// private : 해당 클래스 내부만, 최상위에서 선언 가능
+
+open class Access{
+    var publicData = 10
+    protected  var protectedData = 20
+    private var privateData = 30
+}
+
+class AccessSub: Access(){
+    fun subFun(){
+        publicData++
+        protectedData++
+        //privateData++ 오류. 해당 클래스에서 벗어남
+    }
+}
+
+fun main(){
+    val obj = Sub2()
+    obj.someFun()
+
+    // 접근 제한자
+    val obj2 = Access()
+    obj2.publicData++
+    //obj2.protectedData++  오류. 해당 클래스도 아니고 하위 클래스도 아님
+    //obj2.privateData++    오류. 해당 클래스가 아님님
+}
