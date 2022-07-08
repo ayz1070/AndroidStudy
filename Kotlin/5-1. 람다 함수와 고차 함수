@@ -1,0 +1,74 @@
+// 람다 함수 : 익명 함수 정의 기법으로 함수를 간단하게 정의할 때 이용한다.
+// '{ 매개변수 -> 함수 본문 }'
+// 규칙
+// 1. 람다 함수는 {}로 표현한다.
+// 2. {} 안에 화살표(->)가 있으며 화살표 왼쪽은 매개변수, 오른쪽은 함수 본문이다.
+// 3. 함수의 반환값은 함수 본문의 마지막 표현식이다.
+
+// 일반 함수
+fun sum1(no1: Int, no2: Int): Int{
+    return no1+no2
+}
+
+// 람다 함수
+// 익명 함수라 변수에 대입하여 사용
+val sum2 = {no1:Int, no2:Int -> println(no1+no2)} // 훨씬 간단함
+
+// 매개 변수가 없는 람다 함수
+val prin = {->println("매개변수 없는 람다함수~")} // 화살표 생략 가능
+
+// 타입 별칭 typealias
+typealias MyFunType = (Int,Int)->Boolean
+
+// 고차 함수 : 함수를 매개변수로 전달받거나 반환하는 함수를 의미함
+// 보통 함수는 데이터를 반환함
+fun hotFun(arg: (Int)-> Boolean): () -> String{
+    val result = if(arg(10)){
+        "valid"
+    }else{
+        "invalid"
+    }
+    return {"hotFun result : $result"}
+}
+
+fun main(){
+    // 람다 함수 호출
+    sum2(10,20);
+    // 람다 함수 선언과 동시에 호출
+    { n1: Int, n2:Int -> println(n1+n2)}(20,30)
+
+    // 매개변수가 없는 람다 함수
+    prin()
+
+    // 매개변수가 1개일 때 it 키워드
+    val some: (Int) -> Unit = {println(it)} //매개 변수의 타입을 지정했을 때 it 사용 가능. 여기선 Int로 지정.
+
+    // 람다함수의 반환
+    // return을 사용할 수 없음
+    val some2 = {no1: Int, no2: Int ->
+        println("람다 함수 내부")
+        no1*no2     // 반환값
+    }
+    println("결과 : ${some2(10,20)}")
+
+    // 함수 타입
+    // 코틀린에서는 함수를 변수에 대입해서 사용 가능, 그래서 변수를 함수 타입으로 선언해야함
+    val some3: (Int,Int) -> Int = {n1: Int, n2:Int -> n1+n2}
+
+    // 함수 타입 별칭
+    val someFun:MyFunType={n1:Int, n2:Int->
+        n1 > n2
+    }
+    println(someFun(10,20))
+    println(someFun(20,10))
+
+    // 매개변수 타입 생략
+    val someFun2:(Int, Int) -> Boolean = {n1,n2 ->  // (Int,Int)에서 n1과 n2의 타입을 유추할 수 있음 고로 타입 생략 가능
+        n1>n2
+    }
+
+    // 고차 함수
+    val result = hotFun({n1 -> n1>0})
+    println(result())
+
+}
